@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Web scraping</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+</head>
+
+<body>
+  <main>
+    <section class="form-section text-center mb-5">
+      <h1 class="page-title">Web Scraping Indeed Job Site</h1>
+      <form class="form">
+        <input class="skill-input" type="text" placeholder="Type skill" required name="skill" autofocus />
+        <button type="submit" class="submit-button btn btn-primary btn-sm">Find</button>
+      </form>
+    </section>
+    <div class="get-result"></div>
+  </main>
+
+  <script>
+    const form = document.querySelector('.form');
+    const result = document.querySelector('.get-result');
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const input = document.querySelector('.skill-input');
+
+      fetch('/scrape', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            skill: input.value,
+          })
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw Error(response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log(data);
+
+          result.innerHTML = `
+            <h2>Job Listings</h2>
+            <ul>
+              ${data.list.map(job => `
+                <li>
+                  <h3>${job.title}</h3>
+                  <p>Company: ${job.companyName}</p>
+                  <p>Salary: ${job.salary}</p>
+                  <a href="${job.link}" target="_blank">View Job</a>
+                </li>
+              `).join('')}
+            </ul>
+          `;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    });
+  </script>
+</body>
+
+</html>

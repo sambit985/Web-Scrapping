@@ -1,0 +1,29 @@
+{
+  "name": "web-scrapping",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev":"nodemon inex.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sambit985/Web-Scrapping.git"
+  },
+  "keywords": [
+    "Node.js",
+    "Express.js"
+  ],
+  "author": "Sambit Kumar Nayak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sambit985/Web-Scrapping/issues"
+  },
+  "homepage": "https://github.com/sambit985/Web-Scrapping#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^20.2.1"
+  }
+}
